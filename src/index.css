@@ -24,4 +24,20 @@ code {
 .main{
   position: fixed;
 }
+.item-price{
+  color: chocolate;
+}
+
+.item-quantity button{
+  padding: 0.15rem 1rem;
+}
+.cart-text{
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cart-text:hover{
+  overflow: visible;
+  white-space: pre-line;
+}
 

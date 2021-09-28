@@ -5,27 +5,45 @@ const cartSlice=createSlice({
     initialState:{
         items:[],
         totalQuantity:0,
-        cartShow:false
+        cartShow:false,
+        cartTotalPrice:0
     },
     reducers:{
         showCart(state,action){
             state.cartShow=!state.cartShow;
         },
+       
         addItemToCart(state,action){
                 const newItem = action.payload;
+                
                 const existingItem = state.items.find((item) => item.id === newItem.id);
                 state.totalQuantity++;
+             
                 if(!existingItem){
-                    state.items=state.items.push({ id: newItem.id,
+                   
+                   state.items.push({ id: newItem.id,
                         price: newItem.price,
                         quantity: 1,
                         totalPrice: newItem.price,
-                        name:newItem.title
+                        name:newItem.title,
+                        imageSrc:newItem.imageSrc,
+                        cartTotalPrice:newItem.price
                     })
                 }else{
                     existingItem.quantity++;
-                    existingItem.totalPrice = existingItem.totalPrice + newItem.price;
+                    existingItem.totalPrice=existingItem.totalPrice+newItem.price;
                 }
+        },
+        removeItemFromCart(state,action){
+            const id = action.payload;
+            const existingItem = state.items.find((item) => item.id === id);
+            state.totalQuantity--;
+            if(existingItem.quantity===1){
+                state.items=  state.items.filter(item=>item.id!==id)
+            }else{
+                existingItem.quantity--;
+                existingItem.totalPrice=existingItem.totalPrice-existingItem.price;
+            }
         }
     }
 });
